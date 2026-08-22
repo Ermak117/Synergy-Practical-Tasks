@@ -71,8 +71,8 @@ def date_output(day, month, year):
         result = ""
 
         for znak in data_str:
-            # Берём нужную строку цифры и меняем точки на пробелы
-            result = result + numbers[znak][line_height].replace(".", " ") + "  "
+            # Берём готовую строку цифры переформатированную звездочками 
+            result = result + numbers[znak][line_height] + "  "
 
         print(result)
 
