@@ -62,17 +62,17 @@ numbers = {
 # Функция для прорисовки даты звёздочками
 def date_output(day, month, year):
     # Формат ДД ММ ГГГГ
-    # :02d означает, что число будет занимать 2 знака, например 5 -> 05
-    # :04d означает, что год будет занимать 4 знака
+    # :02d - число и месяц будет занимать 2 знака
+    # :04d  - год будет занимать 4 знака
     data_str = f"{day:02d} {month:02d} {year:04d}"
 
-    # Высота цифр - 5 строк
+    # Высота цифр звёздочками - 5 строк
     for line_height in range(5):
         result = ""
 
-        for znak in data_str:
+        for star in data_str:
             # Берём готовую строку цифры переформатированную звездочками 
-            result = result + numbers[znak][line_height] + "  "
+            result = result + numbers[star][line_height] + "  "
 
         print(result)
 
