@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Счётчик</title>
+   
+
+     <style>
+       * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /*фон страницы - линейный градиент*/
+        body{
+            min-height: 100vh;
+            display: flex; 
+            justify-content: center;/*выравнивает элементы вдоль основной оси внутри флекс‑контейнера*/
+            align-items:center;
+            background: linear-gradient(135deg, #1bda81, #a12dfad8);
+            font-family:Verdana, Geneva, Tahoma, sans-serif
+        }
+
+        /*Контейнер счетчика*/
+        .counter{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            padding: 40px;
+            background: #cdcbcb71;
+            border-radius: 15px;
+        }
+
+        /*Окно результата*/
+        .result{
+            width:400px;
+            padding: 25px;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+            border-radius: 10px;
+            background: rgb(255, 0, 0);
+            color: rgb(255, 255, 255);
+            transition: background 0.3s ease;
+
+        }
+
+         /*Цвет фона результата */
+
+         /*Фон при положительных значениях */
+        .result.positive{
+            background: yellow;
+            color: black;
+        }
+        /*Фон при отрицательных значениях */
+        .result.negative{
+            background: green;
+            color:white
+        }
+
+        /*Фон при значении "0"*/
+        .result.zero{
+            background: rgb(255, 0, 0);
+            color: black;
+        }
+
+        /*Блок с кнопками */
+        .buttons{
+            display: flex;
+            gap:20px;
+        }
+
+        /*Стиль кнопок*/
+        button{
+            width: 190px;
+            height: 50px;
+            font-size: 28px;
+            border:darkgreen;
+            border-radius: 5px;
+            cursor: pointer;
+            background: linear-gradient(to top, rgba(186, 10, 240, 0.5), rgba(59, 22, 224, 0.466));
+            transition: opacity 0.2s ease;
+        }
+
+        /*Неактивная кнопка*/
+        .button:disabled{
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        /*Блок с сообщением*/
+        .message{
+            display: none;
+            padding: 15px;
+            background:red;
+            color: rgb(255, 255, 255);
+            font-size: 18px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+       
+        /* Класс ждля показа сообщения */
+        .message.show{ 
+            display:block;
+
+        }
+        
+     </style>
+  </head>
+
+  <body>
+
+    <div class="counter">
+
+        <div id="result" class="result zero">0</div>
+            
+            <div class="buttons">
+                <button id="minus">-</button>
+                <button id="plus">+</button>
+            </div>
+                
+            <div id="message" class="message">
+            вы достигли экстремального значения
+            </div>
+    </div>
+
+<script>
+    let count = 0;
+
+    const result = document.getElementById("result");
+    const plusButton = document.getElementById("plus");
+    const minusButton = document.getElementById("minus");
+    const message = document.getElementById("message");
+    
+    // Функция обновления интерфейса 
+    function updateInterface(){
+        //выводим текущее значение
+        result.textContent = count;
+
+        // убираем старые классы
+        result.classList.remove("positive", "negative", "zero");
+
+        // Меняем цвет фона окна с результатами
+        if (count > 0){
+            result.classList.add("positive");
+        }else if(count < 0){
+            result.classList.add("negative");
+        }else{
+            result.classList.add("zero");
+        }
+
+        // Блокировка кнопок на предельных значениях 10 и -10
+        plusButton.disabled = count === 10;
+        minusButton.disabled = count === -10;
+
+        // Сообщение при достижении порогового значения 
+        if (count === 10 || count === -10){
+            message.classList.add("show");
+        }else {
+            message.classList.remove("show");
+        }
+    }
+    // Слушатель события кнопки "МИНУС"
+    minusButton.addEventListener("click", function(){
+        count--;
+        updateInterface();
+    });
+
+    // Слушатель события кнопки "ПЛЮС"
+    plusButton.addEventListener("click", function(){
+        count++;
+        updateInterface();
+    });
+    // Первичная отрисовка при загрузке страницы
+    updateInterface();
+
+</script>
+
+  </body>
+</html>
